@@ -1,0 +1,54 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type='text/javascript' src='jquery-2.1.4.js' ></script>
+	<style>
+		div{position:relative;margin-top:200px;}
+	  a{text-decoration:none;text-indent:5px;}
+	 span{width:78px;display:none;border:1px solid #ccc;border-top-style:dashed;background:#eee;position:absolute;top:30px;}
+	  #orign{display:block;border: solid 1px #ccc;width:78px;height:30px;line-height:30px;}
+	 span a {display:block;line-height:28px;height:28px;}
+	 span a:hover{background:#ce2;}
+	 .arrow{border-left:6px solid #fff;border-right:6px solid #fff;border-top:6px solid green;position:absolute;top:14px;left:60px;
+	 	-webkit-transition:-webkit-transform 1s ease-in;	-moz-transition:-moz-transform 1s ease-in;	-o-transition:-o-transform 1s ease-in;	}
+	 .arrowRotate{-moz-transform;roate(180deg);-moz-transform-origin:50% 30%;-webkit-transform:rotate(180deg);-webkit-transform-roigin:50% 30%;
+	 							-o-transform:rotate(180deg);-o-transform-roigin:50% 30%;transform:rotate(180deg);transform-roigin:50% 30%;}
+	</style>
+	<script>
+		$(function(){
+			$('#orign').click(function(){
+		$(this).next('span').slideDown(400);
+		$('.arrow').addClass('arrowRotate');
+		});
+	$('#orign').blur(function(){
+		$(this).next('span').slideUp(600);
+		$('.arrow').removeClass('arrowRotate');
+		});
+		
+	$('#selectmenu>a').click(function(){
+	
+		$('#orign').text($(this).text());		
+		$('#selectrel').attr('value',$(this).attr('rel'));
+		$(this).parent().slideUp(600);
+		$('.arrow').removeClass('arrowRotate');
+		return false;
+		});
+			});	
+	</script>
+</head>
+<body>
+	<div>	
+		<a  id="orign" href="#">全部</a>
+		<span id="selectmenu">
+			<a href="#" rel="0">全部</a>
+			<a href="#" rel="1">商品</a>
+			<a href="#" rel="2">服务</a>
+		</span>	
+		<input type="hidden" name="" value="" id="selectrel">	
+		<em class="arrow"></em>	
+	</div>
+	
+</body>
+
+</html>
