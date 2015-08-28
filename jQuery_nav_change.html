@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery导航切换</title>
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<style>
+	body{font-size:13px;}
+	#divFrame{border:solid 1px #063;width:301px;overflow:hidden;}
+	#divFrame .clsHead{background:#eee;padding:8px;height:18px;cursor:hand;}
+	#divFrame .clsHead h3{padding:0px;margin:0px;float:left;}
+	#divFrame .clsHead span{margin-top:3px;float:right;}
+	
+	#divFrame .clsContent{padding:8px;}
+	#divFrame .clsContent ul{list-style-type:none;margin:0px;padding:0px;}
+	#divFrame .clsContent ul li{float:left;width:95px;height:23px;line-height:23px;}
+	div img{width:20px;height:20px;display:block}
+	#divFrame .clsBot{float:right;padding-top:5px;padding-bottom:5px;}
+	
+	.getFoucs{background:red;}
+</style>
+
+<script type="text/javascript">
+	$(function(){
+		$(".clsHead").click(function(){
+			if($(".clsContent").is(":visible")){
+				$(".clsHead span img").attr("src","image/2.jpeg");
+				$(".clsContent").css("display","none");
+				}else{
+				$(".clsHead span img").attr("src","image/1.jpeg");
+				$(".clsContent").css("display","block");	
+					}
+			});
+		//$(".clsHead").toggle(function(){
+//			$(".clsHead span img").attr("src","image/2.jpeg");
+//			$(".clsContent").css("display","none");
+//			},
+//		function(){
+//			$(".clsHead span img").attr("src","image/1.jpeg");
+//			$(".clsContent").css("display","block");
+//			});
+		$(".clsBot > a").click(function(){
+			if($(".clsBot > a").text() == "简化"){
+				$("ul li:gt(4):not(:last)").hide();
+				$(".clsBot > a").text("更多");
+				}else{
+				$("ul li:gt(4):not(:last)").show().addClass("getFocus");
+				$(".clsBot > a").text("简化");
+				}
+			});
+		
+		});
+</script>
+</head>
+
+<body>
+	<div id="divFrame">
+    	<div class="clsHead">
+        	<h3>图书分类</h3>
+           <span><img src="image/1.jpeg" alt="1" /></span>
+        </div>
+   		
+        <div class="clsContent">
+        	<ul>
+              <li><a href="javascript:void(0);">小说</a>(12345)</li>
+              <li><a href="javascript:void(0);">文艺</a>(3456)</li>
+              <li><a href="javascript:void(0);">青春</a>(2345)</li>
+              <li><a href="javascript:void(0);">少儿</a>(12456)</li> 
+              <li><a href="javascript:void(0);">汽车</a>(870)</li>
+              <li><a href="javascript:void(0);">美女</a>(9073)</li>
+              <li><a href="javascript:void(0);">街拍</a>(1256)</li>
+              <li><a href="javascript:void(0);">体育</a>(890)</li>
+              <li><a href="javascript:void(0);">新闻</a>(457)</li>
+              <li><a href="javascript:void(0);">电影</a>(893)</li>
+              <li><a href="javascript:void(0);">计算机</a>(893)</li>
+              <li><a href="javascript:void(0);">管理</a>(893)</li>          
+            </ul>
+        	<div class="clsBot"><a href="javascript:void(0);">简化</a>
+         
+            </div>
+        </div>
+        
+          
+    </div>
+</body>
+</html>
