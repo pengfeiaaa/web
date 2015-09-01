@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<info>
+	<User id="1">
+		<name>小明</name>
+		<sex>男</sex>
+		<email>123@123.com</email>
+	</User>
+	
+	<User id="2">
+		<name>小花</name>
+		<sex>女</sex>
+		<email>908@123.com</email>
+	</User>
+
+</info>

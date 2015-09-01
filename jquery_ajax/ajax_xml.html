@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/*$("#btn").click(function(){
+			$.get("UserInfo.xml",function(data){
+				$("#divTip").empty();//清空divTip原来的内容
+				var strHTML = "";
+				$(data).find("User").each(function(){ //找到每一个user节点，对其进行处理
+					var $strUser = $(this); //user节点赋值给strUser
+					strHTML += "姓名"+ $strUser.find("name").text()+"<br>";
+					strHTML += "性别"+ $strUser.find("sex").text() +"<br>";
+					strHTML += "邮箱"+ $strUser.find("email").text() +"<hr>";					
+					})
+				$("#divTip").html(strHTML);//把获取的节点数据显示到divTip中
+				})
+			
+			})*/  //此处是ajax异步获取xml数据
+		 
+		 /*	$("#btn").click(function(){
+				$.getScript("UserInfo.js")
+			})*/ //此处是js 页面加载的方法
+		
+		 $("#btn").click(function(){
+			 $.post("UserInfo.php",$("#formUserInfo").serialize(),function(data){
+				 alert(data);
+				 $("#divTip").empty().html(data);
+				 })
+			 
+			 })
+			
+		})
+
+</script>
+<title>AJAx异步获取XML文档数据</title>
+</head>
+
+<body>
+<form id="formUserInfo">
+	<span>姓名：</span>
+    <input type="text" id="InName" name="InName">
+    <select name="sex">
+    	<option value="1">男</option>
+        <option value="0"> 女</option>     
+    </select>
+     <input type="checkbox" name="IsEmail" value="yes">
+        <label for="IsEmai">显示邮箱</label>
+	<input type="button" id="btn" value="异步获取数据">
+</form>
+<div id="divTip"></div>
+</body>
+</html>
