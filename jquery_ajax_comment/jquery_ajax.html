@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="jquery-2.1.1.js"></script>
+	<meta charset="utf-8">
+	<title>ajax新闻评论刷新</title>
+	<script>
+	$(function(){
+		$(document).ajaxStart(function(){
+			$("#showTip").show();
+		})
+		$(document).ajaxStop(function(){
+			$("#showTip").html("数据已处理完成").hide("normal");
+		})
+	LoadData();//首先加载xml文件内容
+	
+		$("#btn").click(function(){ //发表评论
+			var strName = encodeURI($("#user").val());
+			var comment = encodeURI($("#comment").val());
+			$.ajax({
+			type:"GET",
+			url:"jquery_ajax_NewsInfo.php",
+			dataType:"html",
+			data:{user:strName,comment:comment},
+			success:function(msg){
+				console.log(msg);
+				LoadData();//在点击发表后，重新加载评论列表，得到最新的评论列表
+				$("#user").val("");	//点击发表后 清空输入框的内容
+				$("#comment").val("");	
+			}
+			})
+		})
+
+
+		function LoadData(){  //加载xml文件的方法
+		$.ajax({
+		   type: "GET",//大写
+			url:"NewsInfo.xml",//请求的数据页面
+			dataType:"xml",//请求返回的数据类型
+			success:function(data){//数据返回成功后的处理
+				$("#showNews").empty();//清空列表内容
+				var strHTML ="";
+				if($(data).find("News").length==0){
+					strHTML ="<div style='text-align:center'>目前还没有找到点评数据</div>"
+				}
+			$(data).find("News").each(function(){
+				var $strUser = $(this);
+				strHTML += "<div><div>荣拓网友&nbsp;&nbsp;<a href=''>"+
+							$strUser.find("user").text()+"</a></div>";
+				strHTML += "<div>"+$strUser.find("comment").text()+"</div>";
+				strHTML += "<div>发送时间&nbsp;&nbsp;"+$strUser.find("date").text()+"</div>";
+				strHTML += "</div>";
+			})
+			$("#showNews").html(strHTML);
+			}	
+		});
+    }
+
+
+	})
+	</script>
+</head>
+<body>
+	<h2>最新点评</h2>
+	<div id="showTip" style="display:none">正在发送数据请求</div>
+	<div id="showNews"></div>
+	
+	<form>
+	<p>发表评论</p>
+	<input type="textarea" style="width:300px;height:200px" id="comment"><br>
+	用户名：<input type="text" id="user"/><input type="button" id="btn" value="发表" />
+	</form>
+
+</body>
+
+</html>
