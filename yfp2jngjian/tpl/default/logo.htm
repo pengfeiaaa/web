@@ -1,0 +1,117 @@
+<header class="header">
+    <div class="container">
+        <div class="header-website">
+            <div class="brand-logo">
+                <a href="{SITEURL}"><img src="{$strWebLogo}" alt="KPPW"></a>
+            </div><!-- brand-logo end--><!--<div class="header-location">
+            全国站
+            <div class="localtion-layer">
+            <a href="javascript:void(0);" data-toggle="dropdown">[切换城市<span class="caret"></span>]</a>
+            <ul class="dropdown-menu for-city" role="menu" aria-labelledby="dLabel">
+            {loop $arrDisplaypro $k $v}
+            <li><a href="javascript:void(0);" role="menuitem" tabindex="-1">$v['name']</a></li>
+            {/loop}
+            </ul>
+            </div>--><!-- localtion-layer end--><!--</div>--><!-- header-location end-->
+        </div>
+        <div class="header-function">
+            <div class="header-search">
+                <form action="{if $do =='tasklist'||$do =='goodslist'||$do =='sellerlist'}{$strUrl}{else}index.php?do=tasklist{/if}" role="search" id="topHeaderSearch" method="post">
+                    <div class="btn-group">
+                        <button type="button" id="searchType" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
+                            {if $do == 'goodslist'}商品
+                            {elseif $do == 'tasklist'}任务
+                            {elseif $do == 'sellerlist'}服务商
+                            {else}
+                            {if $task_open}任务
+                            {elseif !$task_open&&$shop_open}商品
+                            {/if}
+                            {/if}<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="searchOption">
+                            {if $task_open}
+                            <li {if $do  == 'tasklist'||($do !=  'goodslist'&&$do !=  'sellerlist')}class="active"{/if}>
+                                <a href="javascript:void(0);" rel="tasklist">任务</a>
+                            </li>
+                            {/if}
+                            {if $shop_open}
+                            <li {if $do  == 'goodslist'}class="active"{/if}>
+                                <a href="javascript:void(0);" rel="goodslist">商品</a>
+                            </li>
+                            {/if}
+                            <li {if $do  == 'sellerlist'}class="active"{/if}>
+                                <a href="javascript:void(0);" rel="sellerlist">服务商</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="form-group search-input po_re" id="div_search_input">
+                        <input type="text" name="ky" id="search"  class="form-control" placeholder="请输入关键词" value="{if $ky}{$ky}{/if}" onkeyup="searchlist();" onfocus="searchlist();" data-toggle="dropdown"  x-webkit-speech="" x-webkit-grammar="bUIltin:search" lang="zh-CN"  aria-haspopup="true" aria-expanded="false" autocomplete="off">
+                        <ul class="dropdown-menu" role="menu" id="hotsearch" aria-labelledby="dLabel" style="display:none">
+
+                        </ul>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        搜索
+                    </button>
+                </form>
+            </div>
+            <!-- header-search end-->
+            {if $arrTopIndus && $indus_arr}
+            <div class="header-keywords">
+                热门搜索：
+                {loop $arrTopIndus $k $v}
+                	{if $indus_arr[$v['indus_id']]['indus_name']}
+                		<a href="index.php?do=tasklist&i=$v['indus_id']" class="marked marked-tags">{$indus_arr[$v['indus_id']]['indus_name']}</a>
+                	{/if}
+                {/loop}
+            </div>
+            {/if}
+            <!-- header-keywords end-->
+        </div>
+        <!-- header-function end-->
+    </div>
+    <script type="text/javascript">
+	    function searchlist(){
+	   		var ky=$("#search").val();
+	   		var searchvalue1=$("#searchOption li:first").hasClass('active');
+	   		var searchvalue2=$("#searchOption li:eq(1)").hasClass('active');
+	    	var searchvalue3=$("#searchOption li:eq(2)").hasClass('active');
+	    	var ky=$("#search").val();
+	    	if(searchvalue2==true){
+	   			search='2';
+	   		}else if(searchvalue3==true){
+	   			search='3';
+	   		}else{
+	    		search = '1';
+	    	}
+			$.post("index.php?do=searchlist&ky="+ky,{search:search},function(data){
+				if(data){
+					$("#hotsearch").replaceWith(data);
+				    $("#div_search_input").addClass('open');
+				}else{
+					$("#hotsearch").hide();
+				}
+
+	    	})
+	         $("#searchOption>li").click(function(){
+	   			if($(this).hasClass('active')==true){
+	   				if($(this).text().contains('商品')){
+	   					$.post("index.php?do=searchlist&ky="+ky,{search:2},function(data){
+	   						$("#hotsearch").replaceWith(data);
+	    				})
+	    			}else if($(this).text().contains('服务商')){
+	    				$.post("index.php?do=searchlist&ky="+ky,{search:3},function(data){
+	    					$("#hotsearch").replaceWith(data);
+	    				})
+	    			}else{
+	   					$.post("index.php?do=searchlist&ky="+ky,{search:1},function(data){
+	   						$("#hotsearch").replaceWith(data);
+	   					})
+	   				}
+	    		}
+	    	});
+	    }
+    </script>
+</header>
+<!-- header end-->

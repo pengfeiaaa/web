@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html dir="ltr" lang="zh-cn" id="ie6"> <![endif]--><!--[if IE 7]>    <html dir="ltr" lang="zh-cn" id="ie7"> <![endif]--><!--[if IE 8]>    <html dir="ltr" lang="zh-cn" id="ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+    <html dir="ltr" lang="zh-cn">
+    <!--<![endif]-->
+    <head>
+        <title>{$strPageTitle}</title>
+        <meta charset="{CHARSET}">
+        <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+        <meta name="renderer" content="webkit">
+        <meta name="keywords" content="{$strPageKeyword}">
+        <meta name="description" content="{$strPageDescription}">
+        <meta name="generator" content="客客出品专业威客{KEKE_VERSION}" />
+        <meta name="viewport" content="width=device-width,initial-scale=1 ,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style” content=black" />
+        <meta name="author" content="kekezu" />
+        <meta name="copyright" content="{$basic_config['copyright']}" />
+		  <meta property="qc:admins" content="1220311574763007636" />
+		<meta property="wb:webmaster" content="6b685cd5f06ba5f1" />
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="apple-touch-icon" href="favicon.ico"/>
+		<!--{template include}-->
+        <script type="text/javascript">
+            var SITEURL = '{$_K[siteurl]}', SKIN_PATH = '{SKIN_PATH}', LANG = '{$language}', INDEX = '{$do}', CHARSET = '{CHARSET}';
+            function   closeErrors()   {
+              return   true;
+            }
+            window.onerror=closeErrors;
+
+        </script>
+
+
+    </head>
+    <body id="{$do}">
+        <div class="header-top">
+			{if $gUserInfo[is_hongbao]==1 && $do=="index"}
+        	<!--{template show_money}-->
+			{/if}
+            <div class="container">
+                <ul class="left-nav">
+                    {if $do!='index'||!$do}
+                    <li class="nav-item">
+                        <a href="index.php?do=index" class="nav-item-link active">回到首页</a>
+                    </li>
+                    {/if}
+                    <!--{eval $uid=$_SESSION ['uid'];}-->
+                    <!--{eval $username=$_SESSION['username'];}-->
+                    {if $uid}
+                    <li class="nav-item nav-static">
+                        欢迎您，
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.php?do=user" class="nav-item-link">{$username}</a>
+                    </li>
+					<li class="nav-item">
+						<a href="index.php?do=user&view=message&op=notice"> <i class="fa fa-envelope"></i>{if $messagecount}({$messagecount}){/if}</a>
+					</li>
+                    <li class="nav-item">
+                        <a href="index.php?do=logout" class="nav-item-link active">退出</a>
+                    </li>
+                    {else}
+                    <li class="nav-item">
+                        欢迎您，<a href="index.php?do=login" class="nav-item-link active">请登录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.php?do=register" class="nav-item-link active">免费注册</a>
+                    </li>
+                    {/if}
+                </ul>
+
+
+                <ul class="right-nav">
+                    <li class="nav-item has-sub">
+                        <a href="#"  class="nav-item-link ">我是雇主<span class="caret"></span></a>
+						<ul class="nav-item-sub nav-sub-list">
+                            <li><a href="index.php?do=sellerlist">找服务商</a></li>
+                            <li><a href="index.php?do=pubtask">发布任务</a></li>
+                            <li><a href="index.php?do=user&view=transaction&op=released&intTaskStatus=0"><span class="badge">{$intWaitPay[0]['count']}</span>待付款任务</a></li>
+                            <li><a href="index.php?do=user&view=transaction&op=released&intTaskStatus=3"><span class="badge">{$intChoose[0]['count']}</span>待选稿</a></li>
+                            <li><a href="index.php?do=user&view=transaction&op=orders&strStatus=wait"><span class="badge">{$intShopPay[0]['count']}</span>待付款商品</a></li>
+                            <li><a href="index.php?do=user&view=gz&op=mark&type=1"><span class="badge">{$intMarkG}</span>待评价</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a href="#" class="nav-item-link ">我是威客<span class="caret"></span></a>
+						<ul class="nav-item-sub nav-sub-list">
+                            <li><a href="index.php?do=pubgoods">发布商品</a></li>
+                            <li><a href="index.php?do=seller&id={$uid}">我的店铺</a></li>
+                            <li><a href="index.php?do=user&view=wk&op=gy&s=seller_confirm"><span class="badge">{$intGy}</span>新的雇佣</a></li>
+                            <li><a href="index.php?do=user&view=transaction&op=sold&intModelId=7&strStatus=seller_confirm"><span class="badge">{$intService}</span>新服务订单 </a></li>
+                            <li><a href="index.php?do=user&view=wk&op=mark&type=1"><span class="badge">{$intMarkW}</span>待评价</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.php?do=help" class="nav-item-link">帮助中心</a>
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a href="javascript:void(0);" class="nav-item-link">分类导航 <span class="caret"></span></a>
+                        <div class="nav-item-sub">
+                            <dl>
+                                <dt>
+                                    任务
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        {loop $indus_task_arr $k $v}
+                                        <li>
+                                            <a href="index.php?do=tasklist&pd=$v['indus_id']">$v['indus_name']</a>
+                                        </li>
+                                        {/loop}
+                                    </ul>
+                                </dd>
+                            </dl>
+                            <div class="line">
+                            </div>
+                            <dl>
+                                <dt>
+                                    商品
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        {loop $indus_goods_arr $k $v}
+                                        <li>
+                                            <a href="index.php?do=goodslist&pd=$v['indus_id']">$v['indus_name']</a>
+                                        </li>
+                                        {/loop}
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:spread({if $do=='article'}true{else}false{/if});void(0);" class="nav-item-link">推广</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+

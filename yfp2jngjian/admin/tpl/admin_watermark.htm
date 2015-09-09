@@ -1,0 +1,89 @@
+<!--{template ADMIN_DIRECTORY/tpl/admin_header}-->
+<div class="box clearfix" id = "body">
+<form method="post" action="index.php?do=watermark" id="frm_hw_add">
+	<input type="hidden" name="do" value="{$do}">
+	<input type="hidden" name="view" value="{$view}">
+	<input type="hidden" name="submit" value="1">
+	<div class="box search p_relative">
+    	<div class="detail" id="detail">
+    		<table cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<th style="width:40px;">水印开启：</th>
+						<td>
+							<input type="radio" name="switch" value="1" {if $config['switch']}checked{/if}>开启
+							<input type="radio" name="switch" value="0" {if !$config['switch']}checked{/if}>关闭
+							<span style="color:red;">水印默认打在右下角</span>
+						</td>
+					</tr>
+					<tr>
+						<th style="width:40px;">生效限制：</th>
+						<td>
+							宽：<input type="text" class="txt" name="width" id = "width" value="{$config['width']}" onkeyup="clearstr(this);">
+						</td>
+					</tr>
+					<tr>
+						<th style="width:40px;"></th>
+						<td>
+							高：<input type="text" class="txt" name="hight" id ="hight" value="{$config['hight']}" onkeyup="clearstr(this);">
+						</td>
+					</tr>
+					<tr>
+						<th style="width:40px;"></th>
+						<td>
+							<span style="color:red;">低于这个范围的图片不加水印</span>
+						</td>
+					</tr>
+					<tr>
+						<th style="width:40px;">水印图片：</th>
+						<td>
+							<input type="file" class="file" name="upload1" id="upload1">
+				  			<a href="../$config['img']" id="imgPreviewA" target="_blank" {if !file_exists('../'.$config['img'])} class="hidden" {/if}  style="max-height:60px; display:inline-block"  >
+				  				<img id="imgPreview1" src="../$config['img']" {if !file_exists('../'.$config['img'])} class="hidden" {/if} style="max-height:60px;"   />
+							</a>
+				  			<input type="hidden" name="filepath1" id="filepath1" value="{$config['img']}">
+						</td>
+					</tr>
+					<tr>
+						<td>
+           				<button class="pill" type="submit" value="保存" name="sbt_add">
+							<span class="icon magnifier">&nbsp;</span>保存
+						</button>
+						</td>
+					</tr>
+           		</tbody>
+			</table>
+    	</div>
+    </div>
+</form>
+</div>
+<script src="../static/js/uploadify/jquery.uploadify.min.js?r={RANDOM_PARA}" type="text/javascript"></script>
+<link href="../static/js/uploadify/uploadify.css" rel="stylesheet">
+<script type="text/javascript">
+         
+$(function(){
+	setTimeout(function(){	
+		uploadify({
+			  file:'upload1',
+			  text:'上传图片',
+			  auto:true,
+			  limit:1,
+			  hide:true,
+			  exts:'*.jpg;*.jpeg;*.gif;*.png;*.bmp'
+			  },{
+			  	mode: 'back',
+			  	fileType:'sys',
+			  	objType:'tools'
+			},response1);
+		
+	},500);
+});
+function response1(json){
+    $("#filepath1").val(json.msg.url);
+    $('#imgPreview1').removeClass('hidden');
+    $('#imgPreviewA').removeClass('hidden');
+    $('#imgPreview1').attr('src','../'+json.msg.url);
+    $('#imgPreviewA').attr('href','../'+json.msg.url);
+}
+</script>
+<!--{template ADMIN_DIRECTORY/tpl/admin_footer}-->
